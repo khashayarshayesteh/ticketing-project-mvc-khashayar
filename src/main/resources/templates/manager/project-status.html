@@ -45,16 +45,18 @@
                                             <tr th:each="project : ${projects}">
                                                 <td th:text="${project.projectCode}"></td>
                                                 <td th:text="${project.projectName}"></td>
-                                                <td th:text="${projectDate + ' to ' + project.enfDate }"></td>
+                                                <td th:text="${project.startDate + ' to ' + project.endDate }"></td>
                                                 <td th:text="${project.assignedManager.firstName+' ' +project.assignedManager.lastName}"></td>
-                                                <td th:text="${project.unfinishedTaskCounts +'/ '+projectCompleteTaskCount}"></td>
+                                                <td th:text="${project.unfinishedTaskCounts +'/ '+ project.completeTaskCounts}"></td>
                                                 <td th:text="${project.projectStatus.value}"></td>
                                                 <td>
-                                                    <!--Show this if the project can be completed-->
-                                                    <a th:if="${project.unfinishedTaskCount == 0 && project.projectStatus.value != complete}" class="btn btn-info rounded-0"
+
+                                                    <a th:if="${project.unfinishedTaskCounts == 0 && project.projectStatus.value != complete}"
+                                                       class="btn btn-info rounded-0"
                                                        th:href="@{/project/manager/complete/{id}(id=${project.projectCode})}">Complete</a>
                                                     <!--Show this if the project can not be completed-->
-                                                    <a th:if="${project.unfinishedTaskCounts > 0 || project.projectStatus.value == 'Completed'}" class="btn btn-info rounded-0 disabled-button">Complete</a>
+                                                    <a th:if="${project.unfinishedTaskCounts > 0 || project.projectStatus.value == 'Completed'}"
+                                                       class="btn btn-info rounded-0 disabled-button">Complete</a>
                                                 </td>
                                             </tr>
                                             </tbody>
