@@ -2,6 +2,7 @@ package com.cydeo.service.impl;
 
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.RoleDTO;
+import com.cydeo.dto.UserDTO;
 import com.cydeo.enums.Status;
 import com.cydeo.service.CrudService;
 import com.cydeo.service.ProjectService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectServiceImpl extends AbstractMapService<ProjectDTO, String> implements ProjectService {
@@ -51,5 +53,16 @@ public class ProjectServiceImpl extends AbstractMapService<ProjectDTO, String> i
 
 
         project.setProjectStatus(Status.COMPLETE);
+    }
+
+    @Override
+    public List<ProjectDTO> getCountedListOfProjectDTO(UserDTO manager) {
+        List<ProjectDTO> projectList = findAll().stream().filter(project -> project.getAssignedManager().equals(manager))
+                .collect(Collectors.toList());
+
+
+
+
+        return projectList;
     }
 }
